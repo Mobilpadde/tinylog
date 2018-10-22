@@ -11,9 +11,9 @@ import src/tinyparser/tiny
 
 echo tiny.parse("""
 @fix
-    Lulz - this has been fixed.
+    Lulz - _this_ has been fixed.
 @anouncement
-    We've got this new thing!
+    We've got __this__ new thing!
 @improvement
-	We've got improved.
+	We've got [improved](https://tinylog.xyz).
 """)
