@@ -31,8 +31,8 @@ let matchers* = @[
 
 let replacers* = @[
     boldReplacer,
-    emphasisReplacer,
     codeReplacer,
+    emphasisReplacer,
     linkReplacer,
     strikeReplacer,
 ]
