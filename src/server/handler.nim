@@ -1,19 +1,15 @@
-import asynchttpserver, asyncdispatch, json, nre
+import asynchttpserver, asyncdispatch, json, nre, os, strutils
 
 import ../tinyparser/tiny
 
-proc singleHandler(file: string): (HttpCode, string, HttpHeaders) {.gcsafe.} = 
+const dataDir = "data"
+
+proc singleHandler(file: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     let status = Http200
     let headers = newHttpHeaders([("Content-Type", "text/html")])
 
-    let log = tiny.parse("""
-    @fix
-        Lulz - _this_ has been fixed.
-    @anouncement
-        We've got __this__ new thing!
-    @improvement
-        We've got [improved](https://tinylog.xyz).
-    """)
+    var f = readFile("$1/$2.tl" % [dataDir, file])
+    let log = tiny.parse(f)
 
     return (status, log, headers)
 
