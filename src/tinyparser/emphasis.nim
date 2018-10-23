@@ -1,10 +1,10 @@
 import nre, strutils
 
-let boldMatcher         = re"(\*\*|__)(.*?)\1"
-let codeMatcher         = re"`(.*?)`"
-let emphasisMatcher     = re"(\*|_)(.*?)\1"
-let linkMatcher         = re"\[([^\[]+)\]\(([^\)]+)\)"
-let strikeMatcher       = re"\~\~(.*?)\~\~"
+let boldMatcher     = re"(\*\*|__)(.*?)\1"
+let codeMatcher     = re"`(.*?)`"
+let emphasisMatcher = re"(\*|_)(.*?)\1"
+let linkMatcher     = re"\[([^\[]+)\]\(([^\)]+)\)"
+let strikeMatcher   = re"\~\~(.*?)\~\~"
 
 proc boldReplacer(m: RegexMatch): string = 
     "<strong>$1</strong>" % [m.captures[1]]

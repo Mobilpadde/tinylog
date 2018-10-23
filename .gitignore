@@ -1,2 +1,4 @@
 tinylog
-data/
+
+site/data/
+site/static/*.css

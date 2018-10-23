@@ -2,16 +2,28 @@ import nre, strutils, sequtils
 
 import emphasis
 
-let matcher = re"(?:(?:\@(\w+))(?:\s+(.+)))"
+type
+    Log = object
+        thing, text: string
 
-proc replacer(m: RegexMatch): string =
-    let thing = toUpperAscii(m.captures[0])
-    result = m.captures[1]
-    for processor in zip(emphasis.matchers, emphasis.replacers):
-        let (matcher, replacer) = processor
-        result = nre.replace(result, matcher, replacer)
+let thingMatcher = re"@\w+"
 
-    return "<li><span>$1</span><p>$2</p></li>" % [thing, result]
+proc parse*(lines: seq[string]): string =
+    var logs = newSeq[Log]()
+    for line in lines:
+        if line.match(thingMatcher).isSome():
+            let l = Log(thing: line.replace("@", ""))
+            logs.add(l)
+        else:
+            var res = line
+            for processor in zip(emphasis.matchers, emphasis.replacers):
+                let (matcher, replacer) = processor
+                res = nre.replace(res, matcher, replacer)
+            logs[logs.len() - 1].text &= res & "<br/>"
 
-proc parse*(text: string): string =
-    nre.replace(text, matcher, replacer)
+    result = ""
+    for l in logs:
+        result &= "<li class=\"$1\"><span class=\"$1\">$1</span><p>$2</p></li>" % [
+            l.thing,
+            l.text,
+        ]

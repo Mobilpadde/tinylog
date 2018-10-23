@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=K2D')
+
+bg = rgba(255, 255, 255, 1)
+brdr = rgba(99, 114, 130, .1)
+fg = rgba(19, 20, 49, .8)
+sz = 300px
+
+t-new = rgb(55, 120, 255)
+t-fix = rgb(30, 209, 243)
+t-bug = rgb(197, 122, 255)
+
+body
+    font 16px/1.1 K2D, sans-serif
+    background bg
+    color fg
+    margin 0
+
+    h1
+        background brdr
+        width sz
+        font-size 1.5rem
+        text-align center
+        border-radius 0.25rem 0.25rem 0 0
+        margin 0 auto
+        padding 0.25rem 0
+        position fixed
+        top 1rem
+        left 0
+        right 0
+
+    ul
+        max-height sz
+        max-width sz
+        box-sizing border-box
+        list-style-type none
+        border 1px solid brdr
+        border-radius 0 0 0.5rem 0.5rem
+        margin 0 auto
+        padding 1em 0
+        position fixed
+        top 3.1rem
+        left 0
+        right 0
+        overflow-y auto
+
+        li
+            display flex
+            flex-direction column
+            // margin 0.5rem 0
+            position relative
+            
+            &:before
+                content ""
+                height auto
+                width 3px
+                background transparent
+                position absolute
+                top 0
+                left 0
+                bottom: 0
+
+            &.new:before
+                background t-new
+
+            &.fix:before
+                background t-fix
+
+            &.bug:before
+                background t-bug
+
+            span
+                color bg
+                width 3em
+                height 1.1em
+                text-align center
+                border-radius 0 .5rem .5rem 0
+                padding 0.4rem
+                margin-right 0.8rem
+                position relative
+
+                &.new
+                    background t-new
+
+                &.fix
+                    background t-fix
+
+                &.bug
+                    background t-bug
+
+        p
+            word-break break-word
+            padding 0 1em
