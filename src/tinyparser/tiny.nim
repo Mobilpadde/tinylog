@@ -7,6 +7,7 @@ proc parse*(lines: seq[string]): string {.gcsafe.} =
         <html>
             <head>
                 <meta charset="utf-8">
+                <title>tinylog</title>
                 <link rel="stylesheet" href="/main.css">
             </head>
             <body>
