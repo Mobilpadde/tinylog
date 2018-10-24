@@ -16,8 +16,6 @@ proc determType(path: string): string =
 proc staticHandler*(path: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     var status = Http200
     var headers = newHttpHeaders([("Content-Type", determType(path))])
-    echo path
-    echo headers
 
     var file = ""
     try:

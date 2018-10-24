@@ -2,7 +2,7 @@ import sequtils, nre, strutils
 
 import types
 
-proc parse*(lines: seq[string]): string {.gcsafe.} =
+proc html*(replacers: seq[string]): string {.gcsafe.} =
     return """
         <html>
             <head>
@@ -12,13 +12,18 @@ proc parse*(lines: seq[string]): string {.gcsafe.} =
             </head>
             <body>
                 <div id="tinylog">
-                    <b class="changes">Changes</b>
-                    <ul>$1</ul>
-                    <a class="log" href="$2" target="_blank">Changelog</a>
+                    <b id="changes">Changes</b>
+                    <ul id="list">$1</ul>
+                    <a id="log" href="$2" target="_blank">Changelog</a>
                 </div>
+                $3
             </body>
         </html>
-    """ % [
+    """ % replacers
+
+proc parse*(lines: seq[string]): string {.gcsafe.} =
+    html(@[
         types.parse(lines),
-        "https://changes.tinylog.xyz"
-    ]
+        "https://changes.tinylog.xyz",
+        ""
+    ])

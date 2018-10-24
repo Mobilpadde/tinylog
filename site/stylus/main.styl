@@ -3,11 +3,16 @@
 bg = rgba(255, 255, 255, 1)
 brdr = rgba(99, 114, 130, .1)
 fg = rgba(19, 20, 49, .8)
-sz = 300px
+w = 300px
+h = calc(100vh - 30px * 2 - 1rem * 2)
 
 t-new = rgb(51, 153, 238)
 t-fix = rgb(0, 217, 116)
 t-bug = rgb(86, 77, 101)
+
+html, body
+    height: 100vh
+    overflow: hidden
 
 body
     font 16px/1.1 K2D, sans-serif
@@ -18,9 +23,9 @@ body
     #tinylog
         margin 1rem
 
-        b.changes, a.log
+        b#changes, a#log
             background rgba(brdr, 0.01)
-            width sz + 3
+            width w + 4
             border 1px solid brdr
             text-align center
             border-radius 0.25rem 0.25rem 0 0
@@ -28,15 +33,34 @@ body
             margin 0 auto
             padding 0.25rem 0
 
-        a.log
+        a#log
             border-radius 0 0 0.25rem 0.25rem
+
+        span.date
+            text-align center
+            padding 0.25rem
+            display block
+
+            &:before, &:after
+                content ''
+                background brdr
+                width 75px
+                height 1px
+                display inline-block
+                margin-bottom 4px
+
+            &:before
+                margin-right 4px
+
+            &:after
+                margin-left 4px
 
         a, a:visited
             color fg
 
         ul
-            max-height sz
-            max-width sz
+            max-width w
+            max-height h
             box-sizing border-box
             list-style-type none
             border 1px solid brdr
