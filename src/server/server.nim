@@ -1,9 +1,12 @@
 import asynchttpserver, asyncdispatch
 
-import  handler
+import mainHandler
 
-proc start*(portInt: uint16) =
+let server = newAsyncHttpServer()
+
+proc start*(portInt: uint16) {.gcsafe.} =
     let port = Port(portInt)
-    
-    let server = newAsyncHttpServer()
-    waitFor server.serve(port, handler.mainHandler)
+    waitFor server.serve(port, mainHandler.handler)
+
+proc stop*() =
+    server.close()

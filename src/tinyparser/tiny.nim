@@ -5,10 +5,19 @@ import types
 proc parse*(lines: seq[string]): string {.gcsafe.} =
     return """
         <html>
-            <head>$2</head>
-            <body><h1>Latest Changes</h1><ul>$1</ul></body>
+            <head>
+                <meta charset="utf-8">
+                <link rel="stylesheet" href="/main.css">
+            </head>
+            <body>
+                <div id="tinylog">
+                    <b class="changes">Changes</b>
+                    <ul>$1</ul>
+                    <a class="log" href="$2" target="_blank">Changelog</a>
+                </div>
+            </body>
         </html>
     """ % [
         types.parse(lines),
-        "<link rel=\"stylesheet\" href=\"/main.css\">",
+        "https://changes.tinylog.xyz"
     ]
