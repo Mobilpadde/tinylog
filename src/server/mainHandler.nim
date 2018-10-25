@@ -7,6 +7,7 @@ import
     handlers/staticHandler,
     handlers/commitHandler,
     handlers/errorHandler,
+    handlers/filesHandler,
     handlers/jsonHandler,
     handlers/lazyHandler
 
@@ -23,6 +24,9 @@ proc handler*(req: Request) {.async.} =
                 of "/lazy":
                     let (status, msg, headers) = lazyHandler(file)
                     await req.respond(status, msg, headers)
+                of "/all":
+                    let (status, msg, headers) = filesHandler(fileType.all)
+                    await req.respond(status, msg, headers)
                 else:
                     let (status, txt, headers) = staticHandler(file)
 
@@ -35,8 +39,13 @@ proc handler*(req: Request) {.async.} =
         case req.url.path:
             of "/githook":
                 let (status, data, headers) = commitHandler(req.body)
-
-                await req.respond(status, data, newHttpHeaders([("Content-Type", "text/html")]))
+                await req.respond(status, data, headers)
+            of "/newest":
+                let (status, msg, headers) = filesHandler(fileType.newest)
+                await req.respond(status, msg, headers)
+            of "/prev":
+                let (status, msg, headers) = filesHandler(fileType.previous, req.body)
+                await req.respond(status, msg, headers)
             else:
                 var (status, body, headers) = jsonHandler(file)
                 await req.respond(status, body, headers)

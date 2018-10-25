@@ -1,6 +1,7 @@
 tinylog
 
 site/scripts/node_modules
-site/data/
+site/data/*.tl
 site/static/*.css
 site/static/*.js
+site/static/files.json

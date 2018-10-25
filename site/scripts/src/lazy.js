@@ -1,50 +1,62 @@
 import cheerio from 'cheerio';
 
-const d = new Date();
-let n = `${d.getFullYear()}${d.getMonth() + 1}${d.getDate()}`;
-let status = 200;
+let idx = -1;
+let all = [];
 
-function load(n) {
+function load() {
     return new Promise((resolve, reject) =>
-        fetch(`/log/${n}`)
-            .then((res) => {
-                status = res.status;
-                if (status !== 200) throw new Error(status);
+        fetch('/all')
+            .then((res) => res.json())
+            .then(resolve)
+            .catch(reject)
+    )
+}
 
-                return res.text();
-            })
+function next() {
+    return new Promise((resolve, reject) => {
+        const n = ++idx;
+
+        if (n < all.length) {
+            fetch(`/log/${all[n]}`)
+            .then((res) => res.text())
             .then(cheerio.load)
             .then(($) => {
                 document.getElementById("list").innerHTML += $('#tinylog ul').html();
                 resolve();
             })
             .catch(reject)
-    )
+        } else {
+            reject("No more entries");
+        }
+    })
 }
 
 function scroller({ target }) {
-    if (status === 200) {
-        if (target.scrollTopMax - 10 <= target.scrollTop) {
-            load(n--);
-        }
+    if (target.scrollTopMax - 10 <= target.scrollTop) {
+        next();
     }
 }
 
 function fetchForHeight() {
-    const tl = document.querySelector('#tinylog #list');
-    const mHeight = parseInt(window.getComputedStyle(tl)['max-height']);
-    if (tl.clientHeight < mHeight) {
-        load(n--);
-    }
+    return new Promise(async (resolve) => {
+        let tl = document.querySelector('#tinylog #list');
+        let mHeight = parseInt(window.getComputedStyle(tl)['max-height']);
+        while (tl.clientHeight < mHeight) {
+            await next();
+        }
+
+        resolve();
+    });
 }
 
-window.addEventListener('load', () => {
-    load(n--)
-        .then(() => {
-            fetchForHeight(); 
-            document
-                .getElementById("list")
-                .addEventListener('scroll', scroller);
-        })
-        .catch(console.error);
+window.addEventListener('load', async () => {
+    const _all = await load();
+    all = _all;
+    
+    await next();
+    await fetchForHeight();
+
+    document
+        .getElementById("list")
+        .addEventListener('scroll', scroller);
 });
