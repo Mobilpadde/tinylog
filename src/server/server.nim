@@ -1,21 +1,11 @@
-import asynchttpserver, asyncdispatch, json, os
+import asynchttpserver, asyncdispatch
 
-import mainHandler
-
-const staticFile = "site/static/files.json"
-const patternDir = "site/data/*.tl"
+import mainHandler, makeFiles
 
 let server = newAsyncHttpServer()
 
 proc start*(portInt: uint16) {.gcsafe.} =
-    var files = newSeq[string]()
-    for f in walkPattern(patternDir):
-        let name = f.extractFilename()
-        files.add(name.substr(0, name.len() - 4))
-
-    writeFile(staticFile, $ %* {
-        "files": files,
-    })
+    makeFilesJson()
     
     let port = Port(portInt)
     waitFor server.serve(port, mainHandler.handler)

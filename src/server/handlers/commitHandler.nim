@@ -1,5 +1,7 @@
 import asynchttpserver, json, os, strutils, nre, sequtils, times
 
+import ../makeFiles
+
 const dataDir = "site/data"
 
 proc gitCommit(body: string): (HttpCode, string) =
@@ -37,5 +39,7 @@ proc commitHandler*(body: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
         for l in newLines:
             f.writeLine(l)
         f.close()
+
+    makeFilesJson()
 
     return (status, "👍", headers)

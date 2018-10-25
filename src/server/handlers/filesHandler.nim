@@ -21,7 +21,8 @@ proc filesHandler*(fType: fileType, curr: string = ""): (HttpCode, string, HttpH
             of fileType.all:
                 let len = parseJson(x)["files"].len()
                 let dArr = parseJson(x)["files"].toSeq()
-                data = $(dArr.toOpenArray(0, len - 1).reversed())
+                let rev = dArr.toOpenArray(0, len - 1).reversed()
+                data = $ %* rev
             of fileType.previous:
                 let dat = parseJson(x)["files"]
                 var prev = $dat[0]
