@@ -6,11 +6,6 @@ function load(n) {
             .then((res) => res.text())
             .then(cheerio.load)
             .then(($) => {
-                const d = document.createElement('span');
-                d.className = 'date';
-                d.innerText = n.replace(/(?:(\d{4})(\d{2})(\d{2}))/g, "$2/$3/$1");
-
-                document.getElementById("list").appendChild(d)
                 document.getElementById("list").innerHTML += $('#tinylog ul').html();
                 resolve();
             })

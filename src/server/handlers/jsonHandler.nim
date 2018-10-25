@@ -1,11 +1,7 @@
 import asynchttpserver, json
 
-proc gitCommit(body: string): JsonNode =
-    let node = parseJson(body)
-    return node["commits"]
-
 proc jsonHandler*(body: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     let headers = newHttpHeaders([("Content-Type", "application/json")])
-    let data = $gitCommit(body)
+    let d = %* {"msg": body}
 
-    return (Http200, data, headers)
+    return (Http200, $d, headers)

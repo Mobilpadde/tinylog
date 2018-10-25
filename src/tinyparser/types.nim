@@ -6,16 +6,23 @@ type
     Log = object
         thing, text: string
 
-let thingMatcher = re"@\w+"
+let thingMatcher = re"@(\w+)"
+let wholeThingMatcher = re"@(\w+)"
 
 proc parse*(lines: seq[string]): string =
     var logs = newSeq[Log]()
     for line in lines:
-        if line.match(thingMatcher).isSome():
-            let l = Log(thing: line.replace("@", ""))
+        let ln = line.replace("\n", "")
+        if ln.find(thingMatcher).isSome():
+            var l = Log(
+                thing: ln
+                    .replace(re".*(?=@)", "")
+                    .replace(thingMatcher, "$1")
+                )
+
             logs.add(l)
         else:
-            var res = line
+            var res = ln.replace(re"([\\n\n]\s?)+", "")
             for processor in zip(emphasis.matchers, emphasis.replacers):
                 let (matcher, replacer) = processor
                 res = nre.replace(res, matcher, replacer)
