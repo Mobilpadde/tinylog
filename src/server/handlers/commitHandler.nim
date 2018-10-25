@@ -16,7 +16,7 @@ proc commitHandler*(body: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     if status == Http500:
         return (status, data, headers)
 
-    data = data.replace(re"[@\w\s\t\n\\n]*```[\\n\n]*([@\w\s\t\n\\n]*)[\\n\n]*```[@\w\s\t\n\\n]*", "$1")
+    data = data.replace(re"[@\w\s\t\n\\n]*```[(?:\\n)\n]*([@\w\s\t\n\\n]*)[\\n\n]*```[@\w\s\t\n\\n]*", "$1")
 
     if data.substr(0, 1) == "\\n":
         data = data.substr(1)
