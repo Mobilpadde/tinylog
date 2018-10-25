@@ -22,7 +22,7 @@ proc parse*(lines: seq[string]): string =
 
             logs.add(l)
         else:
-            var res = ln.replace(re"([(\\)\n]\s?)+", "")
+            var res = ln.replace(re"([\\\n]\s?)+", "")
             for processor in zip(emphasis.matchers, emphasis.replacers):
                 let (matcher, replacer) = processor
                 res = nre.replace(res, matcher, replacer)

@@ -19,7 +19,7 @@ proc codeReplacer(m: RegexMatch): string =
     "<code>$1</code>" % [m.captures[0]]
 
 proc linkReplacer(m: RegexMatch): string = 
-    "<a href='$2'>$1</a>" % [m.captures[0], m.captures[1]]
+    "<a href=\"$2\" target=\"_blank\">$1</a>" % [m.captures[0], m.captures[1]]
 
 let matchers* = @[
     boldMatcher,
