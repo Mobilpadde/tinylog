@@ -1,9 +1,17 @@
 import cheerio from 'cheerio';
 
+let n = 20181022;
+let status = 200;
+
 function load(n) {
     return new Promise((resolve, reject) =>
         fetch(`/log/${n}`)
-            .then((res) => res.text())
+            .then((res) => {
+                status = res.status;
+                if (status !== 200) throw new Error(status);
+                
+                return res.text();
+            })
             .then(cheerio.load)
             .then(($) => {
                 document.getElementById("list").innerHTML += $('#tinylog ul').html();
@@ -14,12 +22,14 @@ function load(n) {
 }
 
 window.addEventListener('load', () => {
-    load('20181022')
+    load(n++)
         .then(() => document
             .getElementById("list")
             .addEventListener('scroll', ({ target }) => {
-                if (target.scrollTopMax - 10 <= target.scrollTop) {
-                    load('20181023');
+                if (status === 200) {
+                    if (target.scrollTopMax - 10 <= target.scrollTop) {
+                        load(n++);
+                    }
                 }
             })
         )
