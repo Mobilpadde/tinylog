@@ -1,6 +1,6 @@
 import asynchttpserver, json, os, strutils, nre, sequtils, times
 
-import ../makeFiles
+import ../makes
 
 const dataDir = "site/data"
 

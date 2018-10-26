@@ -1,13 +1,9 @@
-import os
+import os, httpclient, json
 
 import server/server
 
-if paramStr(1) == "-s":
-    server.start(8080)
-elif paramStr(1) == "-a":
-    echo paramStr(1)
+server.start(8080)
 
 setControlCHook(proc() {.noconv.} =
     server.stop()
-    echo "Bai!"
 )

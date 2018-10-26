@@ -16,7 +16,7 @@ proc handler*(req: Request) {.async.} =
     let file = req.url.path.replace(fileRe, "$1")
 
     if req.reqMethod == HttpGet:
-        if file.len() == 8 and file.isDigit():
+        if file.len() == 8 and isDigit(file):
             let (status, msg, headers) = singleHandler(file)
             await req.respond(status, msg, headers)
         else:
