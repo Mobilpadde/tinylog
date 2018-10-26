@@ -13,7 +13,7 @@ proc html*(replacers: seq[string]): string {.gcsafe.} =
             <body>
                 <div id="tinylog">
                     <b id="changes">Changes</b>
-                    <ul id="list">$4$1</ul>
+                    <ul id="list">$4$1$5</ul>
                     <a id="log" href="$2" target="_blank">Changelog</a>
                 </div>
                 $3
@@ -21,10 +21,11 @@ proc html*(replacers: seq[string]): string {.gcsafe.} =
         </html>
     """ % replacers
 
-proc parse*(lines: seq[string], date: string): string {.gcsafe.} =
+proc parse*(lines: seq[string], date, fin: string = ""): string {.gcsafe.} =
     html(@[
         types.parse(lines),
         "https://changes.tinylog.xyz",
         "",
         "<span class=\"date\">$1</span>" % [date],
+        "<span class=\"date\">fin</span>",
     ])

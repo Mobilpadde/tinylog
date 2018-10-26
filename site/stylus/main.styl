@@ -4,7 +4,7 @@ bg = rgba(255, 255, 255, 1)
 brdr = rgba(99, 114, 130, .1)
 fg = rgba(19, 20, 49, .8)
 w = 300px
-h = 300px
+h = 100%
 
 t-new = rgb(51, 153, 238)
 t-fix = rgb(0, 217, 116)
@@ -15,9 +15,11 @@ body
     background bg
     color fg
     margin 0
+    overflow hidden
 
     #tinylog
-        margin 1rem
+        margin 1rem 0
+        height h
 
         b#changes, a#log
             background rgba(brdr, 0.01)
@@ -54,9 +56,9 @@ body
         a, a:visited
             color fg
 
-        ul
+        ul#list
             max-width w
-            max-height h
+            max-height calc(100% - 30px * 2 - 1rem * 2)
             box-sizing border-box
             list-style-type none
             border 1px solid brdr

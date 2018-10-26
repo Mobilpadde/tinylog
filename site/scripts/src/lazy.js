@@ -22,7 +22,12 @@ function next() {
             .then((res) => res.text())
             .then(cheerio.load)
             .then(($) => {
-                document.getElementById("list").innerHTML += $('#tinylog ul').html();
+                const html = $('#tinylog ul').html();
+                const toRemove = '<span class="date">fin</span>'.length
+
+                document
+                    .getElementById('list')
+                    .innerHTML += html.slice(0, html.length - toRemove);
                 resolve();
             })
             .catch(reject)
@@ -50,9 +55,18 @@ function scroller({ target }) {
 function fetchForHeight() {
     return new Promise(async (resolve) => {
         let tl = document.querySelector('#tinylog #list');
-        let mHeight = parseInt(window.getComputedStyle(tl)['max-height']);
-        while (tl.clientHeight < mHeight) {
+        let mHeight = parseInt(window.getComputedStyle(tl)['max-height']) || tl.clientHeight;
+        let scroll = tl.scrollTopMax;
+        console.log({mHeight, scroll});
+
+        while (scroll === 0) {
             await next();
+
+            tl = document.querySelector('#tinylog #list');
+            mHeight = parseInt(window.getComputedStyle(tl)['max-height']) || tl.clientHeight;
+            scroll = tl.scrollTopMax;
+
+            console.log({mHeight, scroll});
         }
 
         resolve();
@@ -63,6 +77,7 @@ window.addEventListener('load', async () => {
     const _all = await load();
     all = _all;
     
+    await next();
     await fetchForHeight();
 
     document
