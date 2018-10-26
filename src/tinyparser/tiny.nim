@@ -27,5 +27,5 @@ proc parse*(lines: seq[string], date, fin: string = ""): string {.gcsafe.} =
         "https://changes.tinylog.xyz",
         "",
         "<span class=\"date\">$1</span>" % [date],
-        "<span class=\"date\">fin</span>",
+        "<span class=\"date\">$1</span>" % fin,
     ])

@@ -55,18 +55,12 @@ function scroller({ target }) {
 function fetchForHeight() {
     return new Promise(async (resolve) => {
         let tl = document.querySelector('#tinylog #list');
-        let mHeight = parseInt(window.getComputedStyle(tl)['max-height']) || tl.clientHeight;
         let scroll = tl.scrollTopMax;
-        console.log({mHeight, scroll});
 
         while (scroll === 0) {
             await next();
 
-            tl = document.querySelector('#tinylog #list');
-            mHeight = parseInt(window.getComputedStyle(tl)['max-height']) || tl.clientHeight;
             scroll = tl.scrollTopMax;
-
-            console.log({mHeight, scroll});
         }
 
         resolve();
