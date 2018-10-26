@@ -53,7 +53,6 @@ window.addEventListener('load', async () => {
     const _all = await load();
     all = _all;
     
-    await next();
     await fetchForHeight();
 
     document
