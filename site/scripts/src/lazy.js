@@ -2,6 +2,7 @@ import cheerio from 'cheerio';
 
 let idx = -1;
 let all = [];
+let fin = false;
 
 function load() {
     return new Promise((resolve, reject) =>
@@ -26,7 +27,16 @@ function next() {
             })
             .catch(reject)
         } else {
-            reject("No more entries");
+            if (!fin) {
+                fin = true;
+
+                const end = document.createElement('span');
+                end.className = 'date';
+                end.innerText = 'fin';
+
+                document.getElementById('list').appendChild(end);
+                reject('No more entries');
+            }
         }
     })
 }
@@ -56,6 +66,6 @@ window.addEventListener('load', async () => {
     await fetchForHeight();
 
     document
-        .getElementById("list")
+        .getElementById('list')
         .addEventListener('scroll', scroller);
 });
