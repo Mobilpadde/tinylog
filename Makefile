@@ -1,6 +1,6 @@
 DATE=$(shell date +"%Y%m%d")
 TS=$(shell date +%s)
-STATUS=$(shell echo "lulz")
+STATUS=$(shell echo "Whoop, did this!")
 WD=$(shell pwd)
 
 start:
@@ -8,7 +8,7 @@ start:
 	make run
 
 run:
-	nim c -d:ssl -r src/tinylog.nim
+	nim c --threads:on -r src/tinylog.nim 4000
 
 statics:
 	stylus --compress site/stylus -o site/static
@@ -24,7 +24,7 @@ compile:
 	nim c src/tinylog.nim
 
 dump:
-	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:8080/log/$(DATE) --window-size=332,332
+	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:4000/log/$(DATE) --window-size=332,332
 
 auth:
 	twurl authorize --consumer-key ${CON_KEY} --consumer-secret ${CON_SECRET}

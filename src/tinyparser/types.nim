@@ -6,10 +6,10 @@ type
     Log = object
         thing, text: string
 
-let thingMatcher = re"@(\w+)"
-let wholeThingMatcher = re"@(\w+)"
+proc parse*(lines: seq[string]): string {.gcsafe.} =
+    let thingMatcher = re"@(\w+)"
+    let wholeThingMatcher = re"@(\w+)"
 
-proc parse*(lines: seq[string]): string =
     var logs = @[
         Log(thing: "bug"),
         Log(thing: "fix"),
@@ -34,7 +34,7 @@ proc parse*(lines: seq[string]): string =
                     current = 2
         else:
             var res = ln.replace(re"([\\\n]\s?)+", "")
-            for processor in zip(emphasis.matchers, emphasis.replacers):
+            for processor in zip(emphasis.getMatchers(), emphasis.replacers):
                 let (matcher, replacer) = processor
                 res = nre.replace(res, matcher, replacer)
             logs[current].text &= res & "<br/>"

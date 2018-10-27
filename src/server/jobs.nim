@@ -1,4 +1,5 @@
-import json, strutils, os, osproc
+import json, strutils, os, osproc, times, threadpool
+{.experimental.}
 
 const dirs = @[
     "site",
@@ -43,3 +44,14 @@ proc makeFiles*() =
         discard execCmd "make statics"
 
     makeFilesJson()
+
+proc sleeper() =
+    let wait = convert(Hours, Milliseconds, 1)
+    while true:
+        sleep(wait)
+        
+        if now().hour == 23:
+            discard execCmd "make dump && make tweet"
+
+proc queueDumpAndTweet*() =
+    spawn sleeper()

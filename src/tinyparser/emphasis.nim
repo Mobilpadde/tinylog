@@ -21,15 +21,16 @@ proc codeReplacer(m: RegexMatch): string =
 proc linkReplacer(m: RegexMatch): string = 
     "<a href=\"$2\" target=\"_blank\">$1</a>" % [m.captures[0], m.captures[1]]
 
-let matchers* = @[
-    boldMatcher,
-    codeMatcher,
-    emphasisMatcher,
-    linkMatcher,
-    strikeMatcher,
-]
+proc getMatchers*(): seq[Regex] =
+    @[
+        re"(\*\*|__)(.*?)\1",
+        re"`(.*?)`",
+        re"(\*|_)(.*?)\1",
+        re"\[([^\[]+)\]\(([^\)]+)\)",
+        re"\~\~(.*?)\~\~",
+    ]
 
-let replacers* = @[
+let replacers* = [
     boldReplacer,
     codeReplacer,
     emphasisReplacer,

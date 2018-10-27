@@ -1,15 +1,19 @@
-import asynchttpserver, asyncdispatch
+import asynchttpserver, asyncdispatch, strscans
 
-import mainHandler, makes
+import mainHandler, jobs
 
 let server = newAsyncHttpServer()
 
-proc start*(portInt: uint16) {.gcsafe.} =
+proc start*(portStr: string) {.gcsafe.} =
     makeStructure()
     makeFiles()
-    
-    let port = Port(portInt)
-    waitFor server.serve(port, mainHandler.handler)
 
-proc stop*() =
-    server.close()
+    queueDumpAndTweet()
+
+    var portInt: int
+    discard scanf(portStr, "$i", portInt)
+
+    let port = Port(portInt)
+    let server = newAsyncHttpServer()
+
+    waitFor server.serve(port, mainHandler.handler)
