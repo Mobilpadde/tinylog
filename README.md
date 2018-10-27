@@ -20,7 +20,7 @@ CON_KEY=TW_CONSUMER_KEY CON_SECRET=TW_CONSUMER_SECRET make auth
 
 That's it!
 
-You can now start enjoying tinylog :D
+You can now start enjoying tinylog 😇
 
 ### hooks
 
