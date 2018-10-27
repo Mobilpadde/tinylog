@@ -1,6 +1,6 @@
 tinylog
 
-site/scripts/node_modules
+site/node_modules/
 site/dumps/*.png
 site/data/*.tl
 site/static/*.css

@@ -10,8 +10,8 @@
     * [nim](https://nim-lang.org/) can also be installed using [choosenim](https://github.com/dom96/choosenim)
     * [twurl](https://github.com/twitter/twurl) ([guide](https://medium.com/@SamSchmir/a-guide-to-the-twitter-api-and-twurl-8711466a0635))
     * [Firefox](https://www.mozilla.org/en-US/firefox/new/) - for headless screenshots
-    * [stylus](https://www.npmjs.com/package/stylus) *
  * Local packages:
+    * [stylus](https://www.npmjs.com/package/stylus) *
     * [cheerio](https://www.npmjs.com/package/cheerio) *
     * [webpack](https://www.npmjs.com/package/webpack) *
     * [webpack-cli](https://www.npmjs.com/package/webpack-cli) *
@@ -81,14 +81,12 @@ Tinylog exposes some url-paths from standard:
 
 To make a new entry in your logs simply in your git commit:
 
-```md
-\```
+<pre>
+```
 @fix
   Did __this__ thing, that fixed _that_ broken [thing](https://example.com)
-\```
 ```
-
-(Discard the `\`'s)
+</pre>
 
 Or create/edit the files in `site/data` using the pattern `yyyymmdd.tl`, using that same structure, though, you should omit the back-ticks.
 

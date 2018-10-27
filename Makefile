@@ -1,31 +1,31 @@
 DATE=$(shell date +"%Y%m%d")
 TS=$(shell date +%s)
-STATUS=$(shell echo "Whoop, did this!")
+STATUS=$(shell echo "Whoop, I did this!")
 WD=$(shell pwd)
 
 deps:
-	yarn global add stylus || npm i -g stylus
-	cd site/scripts && (yarn || npm i)
+	cd site && (yarn || npm i)
 
 start:
+	make deps
 	make statics
 	make run
 
 run:
 	nim c --threads:on -r src/tinylog.nim 4000
 
-statics:
-	stylus --compress site/stylus -o site/static
-	webpack --config site/scripts/webpack.config.dev.js
-
-watch-styl:
-	stylus --compress -w site/stylus -o site/static
-
-watch-js:
-	webpack --config site/scripts/webpack.config.dev.js -w
-
 compile:
 	nim c --threads:on src/tinylog.nim
+
+statics:
+	cd site && (yarn css || npm run css)
+	cd site && (yarn js || npm run js)
+
+watch-css:
+	cd site && (yarn css -w || npm run css -w)
+
+watch-js:
+	cd site && (yarn js -w || npm run js -w)
 
 dump:
 	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:${PORT}/log/$(DATE) --window-size=332,332
