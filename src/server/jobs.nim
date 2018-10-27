@@ -45,13 +45,13 @@ proc makeFiles*() =
 
     makeFilesJson()
 
-proc sleeper() =
+proc sleeper(port: string) =
     let wait = convert(Hours, Milliseconds, 1)
     while true:
         sleep(wait)
         
         if now().hour == 23:
-            discard execCmd "make dump && make tweet"
+            discard execCmd("PORT=$1 make dump && make tweet" % port)
 
-proc queueDumpAndTweet*() =
-    spawn sleeper()
+proc queueDumpAndTweet*(port: string) =
+    spawn sleeper(port)

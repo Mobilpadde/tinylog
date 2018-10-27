@@ -8,7 +8,7 @@ proc start*(portStr: string) {.gcsafe.} =
     makeStructure()
     makeFiles()
 
-    queueDumpAndTweet()
+    queueDumpAndTweet(portStr)
 
     var portInt: int
     discard scanf(portStr, "$i", portInt)

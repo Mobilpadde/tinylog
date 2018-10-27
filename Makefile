@@ -3,6 +3,10 @@ TS=$(shell date +%s)
 STATUS=$(shell echo "Whoop, did this!")
 WD=$(shell pwd)
 
+deps:
+	yarn global add stylus || npm i -g stylus
+	cd site/scripts && (yarn || npm i)
+
 start:
 	make statics
 	make run
@@ -21,10 +25,10 @@ watch-js:
 	webpack --config site/scripts/webpack.config.dev.js -w
 
 compile:
-	nim c src/tinylog.nim
+	nim c --threads:on src/tinylog.nim
 
 dump:
-	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:4000/log/$(DATE) --window-size=332,332
+	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:${PORT}/log/$(DATE) --window-size=332,332
 
 auth:
 	twurl authorize --consumer-key ${CON_KEY} --consumer-secret ${CON_SECRET}
