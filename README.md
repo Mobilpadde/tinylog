@@ -1,5 +1,7 @@
 # tinylog
 
+![OSS](images/20181027.png?raw=true)
+
 ## Requirements
 
  * [stylus](https://www.npmjs.com/package/stylus)
