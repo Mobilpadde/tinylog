@@ -1,5 +1,7 @@
 import cheerio from 'cheerio';
 
+import mode from './mode';
+
 let idx = -1;
 let all = [];
 let fin = false;
@@ -68,6 +70,9 @@ function fetchForHeight() {
 }
 
 window.addEventListener('load', async () => {
+    mode.init();
+    window.toggle = mode.toggle;
+    
     const _all = await load();
     all = _all;
     

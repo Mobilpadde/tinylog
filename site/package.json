@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "store": "^2.0.12",
     "stylus": "^0.54.5",
     "webpack": "^4.23.0",
     "webpack-cli": "^3.1.2"

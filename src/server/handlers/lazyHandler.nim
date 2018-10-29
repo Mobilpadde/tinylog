@@ -11,5 +11,5 @@ proc lazyHandler*(path: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
         "",
         "<script src=\"/lazy.js\"></script>",
         "",
-        ""
+        "",
     ]), headers)

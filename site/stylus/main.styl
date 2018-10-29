@@ -10,10 +10,49 @@ t-new = rgb(51, 153, 238)
 t-fix = rgb(0, 217, 116)
 t-bug = rgb(86, 77, 101)
 
+scheme(cols)
+    background: cols.bg
+    color: cols.fg
+
+    #tinylog
+        b#changes, a#log
+            background: rgba(cols.brdr, 0.01)
+            border-color: cols.brdr
+
+        span.date
+            &:before, &:after
+                background: cols.brdr
+
+        a, a:visited
+            color: cols.fg
+
+        ul#list
+            border-color:cols.brdr
+
+            li
+                &.new:before
+                    background: cols.t-new
+
+                &.fix:before
+                    background: cols.t-fix
+
+                &.bug:before
+                    background: cols.t-bug
+
+                span
+                    color bg
+
+                    &.new
+                        background: cols.t-new
+
+                    &.fix
+                        background: cols.t-fix
+
+                    &.bug
+                        background: cols.t-bug
+
 body
     font 16px/1.1 K2D, sans-serif
-    background bg
-    color fg
     margin 0
     overflow hidden
 
@@ -22,7 +61,6 @@ body
         height h
 
         b#changes, a#log
-            background rgba(brdr, 0.01)
             width w + 4
             border 1px solid brdr
             text-align center
@@ -41,7 +79,6 @@ body
 
             &:before, &:after
                 content ''
-                background brdr
                 width 75px
                 height 1px
                 display inline-block
@@ -52,9 +89,6 @@ body
 
             &:after
                 margin-left 4px
-
-        a, a:visited
-            color fg
 
         ul#list
             max-width w
@@ -85,17 +119,7 @@ body
                     left 0
                     bottom: 0
 
-                &.new:before
-                    background t-new
-
-                &.fix:before
-                    background t-fix
-
-                &.bug:before
-                    background t-bug
-
                 span
-                    color bg
                     width 3em
                     height 1.1em
                     text-align center
@@ -104,15 +128,25 @@ body
                     margin-right 0.8rem
                     position relative
 
-                    &.new
-                        background t-new
-
-                    &.fix
-                        background t-fix
-
-                    &.bug
-                        background t-bug
-
             p
                 word-break break-word
                 padding 0 1em
+
+    scheme({
+        bg: bg,
+        fg: fg,
+        brdr: brdr,
+        t-new: t-new,
+        t-fix: t-fix,
+        t-bug: t-bug
+    })
+
+    &.dark
+        scheme({
+            bg: fg,
+            fg: bg,
+            brdr: brdr,
+            t-new: t-new,
+            t-fix: t-fix,
+            t-bug: t-bug
+        })

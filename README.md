@@ -10,13 +10,7 @@
     * [nim](https://nim-lang.org/) can also be installed using [choosenim](https://github.com/dom96/choosenim)
     * [twurl](https://github.com/twitter/twurl) ([guide](https://medium.com/@SamSchmir/a-guide-to-the-twitter-api-and-twurl-8711466a0635))
     * [Firefox](https://www.mozilla.org/en-US/firefox/new/) - for headless screenshots
- * Local packages:
-    * [stylus](https://www.npmjs.com/package/stylus) *
-    * [cheerio](https://www.npmjs.com/package/cheerio) *
-    * [webpack](https://www.npmjs.com/package/webpack) *
-    * [webpack-cli](https://www.npmjs.com/package/webpack-cli) *
-
-_*_ can be installed by running `make deps` in your terminal.
+ * Local packages can be installed by running `make deps` in your terminal.
 
 ### twitter
 
