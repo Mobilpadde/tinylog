@@ -1,7 +1,8 @@
 # tinylog
 
 <p align="center">
-<img src="images/20181027.png?raw=true" alt="Sample Image">
+<img src="images/light.png?raw=true" alt="Sample Image">
+<img src="images/dark.png?raw=true" alt="Sample Image">
 </p>
 
 ## Requirements

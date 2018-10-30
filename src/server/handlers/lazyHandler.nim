@@ -13,4 +13,5 @@ proc lazyHandler*(path: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
         "",
         "",
         "",
+        "",
     ]), headers)

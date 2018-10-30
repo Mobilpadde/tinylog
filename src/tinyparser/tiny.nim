@@ -21,7 +21,7 @@ proc html*(replacers: seq[string]): string {.gcsafe.} =
         </html>
     """ % replacers
 
-proc parse*(lines: seq[string], date, fin: string = "", colorMode: string = "dark"): string {.gcsafe.} =
+proc parse*(lines: seq[string], date, fin: string = "", colorMode: string = "light"): string {.gcsafe.} =
     html(@[
         types.parse(lines),
         "https://changes.tinylog.xyz",
