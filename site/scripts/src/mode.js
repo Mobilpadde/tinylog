@@ -1,8 +1,12 @@
 import store from 'store';
 
-function init() {
-    const mode = store.get('mode') || 'light';
-    document.body.className = mode;
+function setEmoji() {
+    const mode = {
+        light: '🌚',
+        dark: '🌞',
+    }
+
+    document.getElementById('toggler').innerText = mode[store.get('mode')];
 }
 
 function toggle() {
@@ -12,4 +16,13 @@ function toggle() {
     init();
 }
 
-export default { init, toggle };
+function init() {
+    const mode = store.get('mode') || 'light';
+    document.body.className = mode;
+
+    document.getElementById('toggler').addEventListener('click', toggle);
+
+    setEmoji();
+}
+
+export default { init, toggle, setEmoji };

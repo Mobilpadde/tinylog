@@ -25,6 +25,7 @@ proc single*(lines: seq[string], dates: seq[string], fin: string, colorMode: str
             htmlgen.a(id="prev", "&laquo;"),
             htmlgen.a(href="/lazy", target="_blank", "Changelog"),
             htmlgen.a(id="next", "&raquo;"),
+            htmlgen.span(id="toggler", ""),
         ),
         htmlgen.script(src="/single.js")
     )
@@ -35,7 +36,10 @@ proc lazy*(colorMode: string = "light"): string {.gcsafe.} =
     let holder = htmlgen.`div`(id="tinylog",
         htmlgen.b(id="changes", "Changes"), 
         "<ul id=\"list\"></ul>",
-        htmlgen.a(id="log", href="/lazy", target="_blank", "Changelog"),
+        htmlgen.span(id="log",
+            htmlgen.a(href="/lazy", target="_blank", "Changelog"),
+            htmlgen.span(id="toggler", ""),
+        ),
         htmlgen.script(src="/lazy.js")
     )
 
