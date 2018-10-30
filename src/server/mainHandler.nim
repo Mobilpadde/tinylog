@@ -40,8 +40,8 @@ proc handler*(req: Request) {.async.} =
             of "/githook":
                 let (status, data, headers) = commitHandler(req.body)
                 await req.respond(status, data, headers)
-            of "/newest":
-                let (status, msg, headers) = filesHandler(fileType.newest)
+            of "/next":
+                let (status, msg, headers) = filesHandler(fileType.next, req.body)
                 await req.respond(status, msg, headers)
             of "/prev":
                 let (status, msg, headers) = filesHandler(fileType.previous, req.body)

@@ -24,12 +24,11 @@ function next() {
             .then((res) => res.text())
             .then(cheerio.load)
             .then(($) => {
-                const html = $('#tinylog ul').html();
-                const toRemove = '<span class="date">fin</span>'.length
+                $('#tinylog ul >.date:last-child').remove();
 
                 document
                     .getElementById('list')
-                    .innerHTML += html.slice(0, html.length - toRemove);
+                    .innerHTML += $('#tinylog ul').html();
                 resolve();
             })
             .catch(reject)

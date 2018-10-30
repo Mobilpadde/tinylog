@@ -67,8 +67,9 @@ Tinylog exposes some url-paths from standard:
 
 #### POST
  * `/githook` - for when a new commit is pushed
- * `/newest` - ___[DEPRECATED]___ fetch the newest log-entry-name
- * `/prev` - ___[DEPRECATED]___ fetch the previous entry
+ * `/next` - fetch the next entry
+ * `/prev` - fetch the previous entry
+ * `/newest` - ___[REMOVED]___ fetch the newest log-entry-name
     * body should be in the format of `yyyymmdd`
  * `/*` - a json msg
 

@@ -18,11 +18,11 @@ scheme(cols)
     color: cols.fg
 
     #tinylog
-        b#changes, a#log
+        b#changes, span#log
             background: rgba(cols.brdr, cols.a)
             border-color: cols.brdr
 
-        span.date
+        .date
             &:before, &:after
                 background: cols.brdr
 
@@ -63,7 +63,7 @@ body
         margin 1rem 0
         height h
 
-        b#changes, a#log
+        b#changes, span#log
             width w + 4
             border: 1px solid brdr.light
             text-align center
@@ -72,10 +72,13 @@ body
             margin 0 auto
             padding 0.25rem 0
 
-        a#log
+        span#log
             border-radius 0 0 0.25rem 0.25rem
 
-        span.date
+            > a
+                margin 0 0.25rem
+
+        .date
             text-align center
             padding 0.25rem
             display block

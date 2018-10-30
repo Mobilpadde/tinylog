@@ -13,15 +13,19 @@ proc layout(hc, bc, bclass: string = ""): string =
 
     htmlgen.html(head, body)
 
-proc single*(lines: seq[string], date, fin, colorMode: string = "light"): string {.gcsafe.} =
+proc single*(lines: seq[string], dates: seq[string], fin: string, colorMode: string = "light"): string {.gcsafe.} =
     let holder = htmlgen.`div`(id="tinylog",
         htmlgen.b(id="changes", "Changes"), 
         "<ul id=\"list\">$1$2$3</ul>" % [
-            "<span class=\"date\">$1</span>" % [date],
+            "<a href=\"/log/$1\" data-date=\"$1\" class=\"date\">$2</a>" % dates,
             types.parse(lines),
             "<span class=\"date\">$1</span>" % [fin],
         ],
-        htmlgen.a(id="log", href="/lazy", target="_blank", "Changelog"),
+        htmlgen.span(id="log",
+            htmlgen.a(id="prev", "&laquo;"),
+            htmlgen.a(href="/lazy", target="_blank", "Changelog"),
+            htmlgen.a(id="next", "&raquo;"),
+        ),
         htmlgen.script(src="/single.js")
     )
 

@@ -5,7 +5,7 @@ import jsonHandler
 const staticFile = "site/static/files.json"
 
 type fileType* = enum
-    newest, previous, all
+    next, previous, all
 
 proc filesHandler*(fType: fileType, curr: string = ""): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     var status = Http200
@@ -15,29 +15,50 @@ proc filesHandler*(fType: fileType, curr: string = ""): (HttpCode, string, HttpH
         let x = readFile(staticFile)
 
         case fType:
-            of fileType.newest:
-                let len = parseJson(x)["files"].len()
-                data = $parseJson(x)["files"][len - 1]
             of fileType.all:
                 let len = parseJson(x)["files"].len()
                 let dArr = parseJson(x)["files"].toSeq()
                 let rev = dArr.toOpenArray(0, len - 1).reversed()
                 data = $ %* rev
-            of fileType.previous:
+            of fileType.next:
                 let dat = parseJson(x)["files"]
+                var next = $dat[0]
+
+                var currInt: int
+                discard scanf(curr, "$i", currInt)
+
+                var dInt: int
+                for idx in 0..<dat.len():
+                    discard scanf(unescape($dat[idx]), "$i", dInt)
+                    if currInt < dInt:
+                        next = $dat[idx]
+                        break
+                data = next
+
+                if currInt >= dInt:
+                    status = Http404
+                    data = "-1"
+
+            of fileType.previous:
+                let dat = parseJson(x)["files"].toSeq().reversed()
                 var prev = $dat[0]
 
                 var currInt: int
                 discard scanf(curr, "$i", currInt)
 
+                var dInt: int
                 for idx in 0..<dat.len():
-                    var dInt: int
                     discard scanf(unescape($dat[idx]), "$i", dInt)
                     if currInt > dInt:
                         prev = $dat[idx]
                         break
                 data = prev
+
+                if currInt <= dInt:
+                    status = Http404
+                    data = "-1"
             else:
+                status = Http404
                 data = "-1"
     except:
         status = Http500
