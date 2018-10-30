@@ -21,11 +21,11 @@ proc html*(replacers: seq[string]): string {.gcsafe.} =
         </html>
     """ % replacers
 
-proc parse*(lines: seq[string], date, fin: string = "", colorMode: string = "light"): string {.gcsafe.} =
+proc parse*(lines: seq[string], date, fin, script: string = "", colorMode: string = "light"): string {.gcsafe.} =
     html(@[
         types.parse(lines),
         "https://changes.tinylog.xyz",
-        "",
+        if script.len() > 0: ("<script src=\"$1\"></script>" % [script]) else: "",
         "<span class=\"date\">$1</span>" % [date],
         "<span class=\"date\">$1</span>" % [fin],
         "",

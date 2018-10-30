@@ -5,6 +5,7 @@ module.exports = {
 
     entry: {
         lazy: path.resolve(__dirname, 'src', 'lazy.js'),
+        single: path.resolve(__dirname, 'src', 'single.js'),
     },
 
     output: {

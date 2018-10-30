@@ -101,3 +101,7 @@ Other than that, we've got a few goodies from `markdown`.
  * The `link` => `[text](link)` => [text](link)
  * The `strike` => `~~WORD~~` => ~~WORD~~
 
+## Post Scriptum
+
+For now you can toggle `dark`- & `light`-mode w/ `toggle()` in the web-console.
+Your settings **will** be remembered.
