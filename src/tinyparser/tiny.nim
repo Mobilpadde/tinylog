@@ -10,7 +10,7 @@ proc html*(replacers: seq[string]): string {.gcsafe.} =
                 <title>tinylog</title>
                 <link rel="stylesheet" href="/main.css">
             </head>
-            <body>
+            <body class="$7">
                 <div id="tinylog">
                     <b id="changes">Changes</b>
                     <ul id="list">$4$1$5</ul>
@@ -29,4 +29,5 @@ proc parse*(lines: seq[string], date, fin: string = "", colorMode: string = "dar
         "<span class=\"date\">$1</span>" % [date],
         "<span class=\"date\">$1</span>" % [fin],
         "",
+        colorMode,
     ])

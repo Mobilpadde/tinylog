@@ -2,6 +2,7 @@ DATE=$(shell date +"%Y%m%d")
 TS=$(shell date +%s)
 STATUS=$(shell echo "Whoop, I did this!")
 WD=$(shell pwd)
+PORT?=4000
 
 deps:
 	cd site && (yarn || npm i)
@@ -12,7 +13,7 @@ start:
 	make run
 
 run:
-	nim c --threads:on -r src/tinylog.nim 4000
+	nim c --threads:on -r src/tinylog.nim ${PORT}
 
 compile:
 	nim c --threads:on src/tinylog.nim
@@ -28,7 +29,7 @@ watch-js:
 	cd site && (yarn js -w || npm run js -w)
 
 dump:
-	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:${PORT}/log/$(DATE) --window-size=332,332
+	firefox -p tinylog -screenshot site/dumps/$(DATE).png http://localhost:${PORT}/log/$(DATE) --window-size=332,346
 
 auth:
 	twurl authorize --consumer-key ${CON_KEY} --consumer-secret ${CON_SECRET}

@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=K2D')
 
 bg = rgba(255, 255, 255, 1)
-brdr = rgba(99, 114, 130, .1)
+brdr = {
+    light: rgba(99, 114, 130, .1),
+    dark: rgba(182, 189, 197, .1)
+}
 fg = rgba(19, 20, 49, .8)
 w = 300px
 h = 100%
@@ -16,7 +19,7 @@ scheme(cols)
 
     #tinylog
         b#changes, a#log
-            background: rgba(cols.brdr, 0.01)
+            background: rgba(cols.brdr, cols.a)
             border-color: cols.brdr
 
         span.date
@@ -27,7 +30,7 @@ scheme(cols)
             color: cols.fg
 
         ul#list
-            border-color:cols.brdr
+            border-color: cols.brdr
 
             li
                 &.new:before
@@ -62,7 +65,7 @@ body
 
         b#changes, a#log
             width w + 4
-            border 1px solid brdr
+            border: 1px solid brdr.light
             text-align center
             border-radius 0.25rem 0.25rem 0 0
             display block
@@ -95,7 +98,7 @@ body
             max-height calc(100% - 30px * 2 - 1rem * 2)
             box-sizing border-box
             list-style-type none
-            border 1px solid brdr
+            border: 1px solid brdr.light
             border-top 0
             border-bottom 0
             display block
@@ -135,18 +138,20 @@ body
     scheme({
         bg: bg,
         fg: fg,
-        brdr: brdr,
+        brdr: brdr.light,
         t-new: t-new,
         t-fix: t-fix,
-        t-bug: t-bug
+        t-bug: t-bug,
+        a: 0.01
     })
 
     &.dark
         scheme({
             bg: fg,
             fg: bg,
-            brdr: brdr,
+            brdr: brdr.dark,
             t-new: t-new,
             t-fix: t-fix,
-            t-bug: t-bug
+            t-bug: t-bug,
+            a: 0.1
         })
