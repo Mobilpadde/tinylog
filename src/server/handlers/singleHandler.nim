@@ -12,7 +12,7 @@ proc singleHandler*(path: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     try:
         let f = readFile("$1/$2.tl" % [dataDir, path]).split(re"\n")
         let date = path.replace(re"(?:(\d{4})(\d{2})(\d{2}))", "$2/$3/$1")
-        log = tiny.parse(f, date, "fin", "/single.js")
+        log = tiny.single(f, date, "fin", "/single.js")
     except:
         status = Http404
 
