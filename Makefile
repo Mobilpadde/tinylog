@@ -1,8 +1,11 @@
 DATE=$(shell date +"%Y%m%d")
 TS=$(shell date +%s)
 STATUS=$(shell echo "Whoop, I did this!")
-WD=$(shell pwd)
 PORT?=4000
+
+ifeq ($(WD),)
+WD:=$(shell pwd)
+endif
 
 deps:
 	cd site && (yarn || npm i)
@@ -13,7 +16,7 @@ start:
 	make run
 
 run:
-	nim c --threads:on -r src/tinylog.nim ${PORT}
+	nim c --threads:on -r src/tinylog.nim ${PORT} $(WD)
 
 compile:
 	nim c --threads:on src/tinylog.nim

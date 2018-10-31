@@ -1,4 +1,4 @@
-import json, strutils, os, osproc, times, threadpool
+import json, strutils, os, osproc, times, threadpool, httpclient, json
 {.experimental.}
 
 const dirs = @[
@@ -45,13 +45,35 @@ proc makeFiles*() =
 
     makeFilesJson()
 
-proc sleeper(port: string) =
+proc fetchCommits*(path, port: string) = 
+    if dirExists(path):
+        let (commits, _) = execCmdEx "cd $1; git --no-pager log --pretty=%b --since yesterday" % path
+        let body = %* {
+            "commits": [
+                {
+                    "message": %*commits
+                }
+            ]
+        }
+
+        let c = newHttpClient()
+        c.headers = newHttpHeaders({ "Content-Type": "application/json" })
+
+        let address = "http://localhost:$1/githook" % port
+        let resp = c.request(address, httpMethod = HttpPost, body = $body)
+        echo resp.status
+
+proc dumpTweet(port: string) =
+    discard execCmd("PORT=$1 make dump && make tweet" % port)
+
+proc sleeper(port, path: string) =
     let wait = convert(Hours, Milliseconds, 1)
     while true:
         sleep(wait)
         
         if now().hour == 23:
-            discard execCmd("PORT=$1 make dump && make tweet" % port)
+            fetchCommits(path, port)
+            dumpTweet(port)
 
-proc queueDumpAndTweet*(port: string) =
-    spawn sleeper(port)
+proc queueDumpAndTweet*(port, path: string) =
+    spawn sleeper(port, path)

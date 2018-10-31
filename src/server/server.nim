@@ -1,14 +1,14 @@
-import asynchttpserver, asyncdispatch, strscans
+import asynchttpserver, asyncdispatch, strscans, threadpool
 
 import mainHandler, jobs
 
 let server = newAsyncHttpServer()
 
-proc start*(portStr: string) {.gcsafe.} =
+proc start*(portStr, repoPath: string = "") {.gcsafe.} =
     makeStructure()
     makeFiles()
 
-    queueDumpAndTweet(portStr)
+    queueDumpAndTweet(portStr, repoPath)
 
     var portInt: int
     discard scanf(portStr, "$i", portInt)

@@ -18,28 +18,33 @@ proc commitHandler*(body: string): (HttpCode, string, HttpHeaders) {.gcsafe.} =
     if status == Http500:
         return (status, data, headers)
 
-    data = data.replace(re"[@\w\s\t\n\\n]*```[(?:\\n)\n]*([@\w\s\t\n\\n]*)[\\n\n]*```[@\w\s\t\n\\n]*", "$1")
+    let matcher = re"[@\w\s\t\n\\n]*```[(?:\\n)\n]*([@\w\s\t\n\\n]*)[\\n\n]*```[@\w\s\t\n\\n]*"
 
-    if data.substr(0, 1) == "\\n":
-        data = data.substr(1)
+    if data.contains(matcher):
+        data = data.replace(matcher, "$1")
 
-    let
-        name = "$1/$2.$3" % [dataDir, format(now(), "yyyyMMdd"), "tl"]
-        newLines = data.unescape().split("\\n")
+        if data.substr(0, 1) == "\\n":
+            data = data.substr(1)
 
-    try:
         let
-            f = open(name, fmAppend)
-        for l in newLines:
-            f.writeLine(l)
-        f.close()
-    except:
-        writeFile(name, "")
-        let f = open(name, fmWrite)
-        for l in newLines:
-            f.writeLine(l)
-        f.close()
+            name = "$1/$2.$3" % [dataDir, format(now(), "yyyyMMdd"), "tl"]
+            newLines = data.unescape().split("\\n")
 
-    makeFilesJson()
+        try:
+            let
+                f = open(name, fmAppend)
+            for l in newLines:
+                f.writeLine(l)
+            f.close()
+        except:
+            writeFile(name, "")
+            let f = open(name, fmWrite)
+            for l in newLines:
+                f.writeLine(l)
+            f.close()
 
-    return (status, "👍", headers)
+        makeFilesJson()
+
+        return (status, "👍", headers)
+    else:
+        return (Http500, "👎", headers)
