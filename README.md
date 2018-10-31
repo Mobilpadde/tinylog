@@ -39,7 +39,7 @@ Compile the tool by:
 make compile
 ```
 
-Run on port `4000`:
+Run on port `4000` (also w/ a repo path, if you dare):
 
 ```sh
 ./tinylog 4000
@@ -48,6 +48,10 @@ Run on port `4000`:
 _OR_
 
 Run `make run` to compile and run directly still on port `4000`.
+
+---
+
+If you run it with a path to any repo, it'll fetch all the commits since yesterday, put them in the `data`-folder and tweet it out at 11pm, as specified below. 
 
 ---
 
