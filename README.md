@@ -42,7 +42,7 @@ make compile
 Run on port `4000` (also w/ a repo path, if you dare):
 
 ```sh
-./tinylog -p:4000 -d:~/repos/tinylog
+./tinylog -p:4000 -d:~/repos/tinylog -t:23
 ```
 
 _OR_
@@ -58,6 +58,16 @@ If you run it with a path to any repo, it'll fetch all the commits since yesterd
 It'll handle everything for you 😍
 
 You can now start enjoying tinylog 😇
+
+## CLI Options
+
+ * `p`, `port`: `int` - any port to start the server on.
+    * std: `4000`
+ * `d`, `dir`, `directory`: `path` - specify which repo-path to look at.
+    * std: `""`
+ * `t`, `time`: `int` - any number between `0` & `23`. Which will then correspond to what time to fetch data and tweet it.
+    * std: `23`
+    * Also, take a look at the [Post Scriptum](#post-scriptum).
 
 ## How it works
 

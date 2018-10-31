@@ -66,14 +66,14 @@ proc fetchCommits*(path, port: string) =
 proc dumpTweet(port: string) =
     discard execCmd("PORT=$1 make dump && make tweet" % port)
 
-proc sleeper(port, path: string) =
+proc sleeper(port, path: string, time: int) =
     let wait = convert(Hours, Milliseconds, 1)
     while true:
         sleep(wait)
         
-        if now().hour == 23:
+        if now().hour == time:
             fetchCommits(path, port)
             dumpTweet(port)
 
-proc queueDumpAndTweet*(port, path: string) =
-    spawn sleeper(port, path)
+proc queueDumpAndTweet*(port, path: string, time: int = 23) =
+    spawn sleeper(port, path, time)

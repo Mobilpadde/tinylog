@@ -4,11 +4,14 @@ import mainHandler, jobs
 
 let server = newAsyncHttpServer()
 
-proc start*(portStr, repoPath: string = "") {.gcsafe.} =
+proc start*(portStr, repoPath, timeStr: string = "") {.gcsafe.} =
     makeStructure()
     makeFiles()
 
-    queueDumpAndTweet(portStr, repoPath)
+    var timeInt: int = 23
+    discard scanf(timeStr, "$i", timeInt)
+
+    queueDumpAndTweet(portStr, repoPath, timeInt)
 
     var portInt: int
     discard scanf(portStr, "$i", portInt)
