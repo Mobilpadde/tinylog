@@ -42,7 +42,7 @@ make compile
 Run on port `4000` (also w/ a repo path, if you dare):
 
 ```sh
-./tinylog 4000
+./tinylog -p:4000 -d:~/repos/tinylog
 ```
 
 _OR_
@@ -113,5 +113,4 @@ Other than that, we've got a few goodies from `markdown`.
 
 ## Post Scriptum
 
-For now you can toggle `dark`- & `light`-mode w/ `toggle()` in the web-console.
-Your settings **will** be remembered.
+If you use the cli-opt `d`, `dir` or `directory`, you'd **not** connect your repo to the hook. This tool **will** handle that for you. By checking the local repo, and fetching the commits from that.
