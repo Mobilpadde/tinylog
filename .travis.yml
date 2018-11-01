@@ -29,7 +29,7 @@ addons:
       - build-essential
 
 before_install:
-  - git tag "$(date +'%Y%m%d%H')_$CHANNEL"
+  - git tag "$(date +'%Y%m%d%H%M')_$CHANNEL"
 
 install:
   - export CHOOSENIM_NO_ANALYTICS=1
