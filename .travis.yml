@@ -26,6 +26,9 @@ addons:
     packages:
       - build-essential
 
+before_install:
+  - git tag "$(date +'%Y%m%d%H%')_$CHANNEL"
+
 install:
   - export CHOOSENIM_NO_ANALYTICS=1
   - curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
@@ -35,11 +38,7 @@ install:
   - choosenim $CHANNEL
 
 script:
-  - make compile
-
-before_deploy:
-  - git config --local user.name "TRAVIS"
-  - git tag "$(date +'%Y%m%d%H%')_$CHANNEL--$NAME"
+  - make compile NAME=$NAME
 
 deploy:
   provider: releases

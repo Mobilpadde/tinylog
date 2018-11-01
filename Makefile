@@ -34,7 +34,7 @@ make release:
 	cp -r site/stylus release/site/
 	cp -r site/package.json release/site/
 
-	tar -czf tinylog.tar.gz release/
+	tar -czf tinylog-$(NAME).tar.gz release/
 
 statics:
 	make deps
