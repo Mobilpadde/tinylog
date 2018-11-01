@@ -27,19 +27,34 @@ matrix:
         - CHANNEL=devel
       compiler: clang
 
+    - os: windows
+      env:
+        - NAME=WINDOWS
+        - CHANNEL=devel
+        - NIM_WIN=https://github.com/dom96/choosenim/releases/download/v0.3.2/choosenim-0.3.2_windows_i386.exe
+      compiler: cmake
+
 addons:
   apt:
     packages:
       - build-essential
 
 before_install:
-  - git tag "$(date +'%Y%m%d%H%M')_$CHANNEL"
-  - export CHOOSENIM_NO_ANALYTICS=1
-  - curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
-  - sh init.sh -y
-  - export PATH=~/.nimble/bin:$PATH
-  - echo "export PATH=~/.nimble/bin:$PATH" >> ~/.profile
-  - choosenim $CHANNEL
+  - git tag -l "$version" || git tag "$(date +'%Y-%m-%d-%H')"
+  - |
+      if [[ "$TRAVIS_OS_NAME" != "windows" ]];
+        export CHOOSENIM_NO_ANALYTICS=1
+        curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
+        sh init.sh -y
+        export PATH=~/.nimble/bin:$PATH
+        echo "export PATH=~/.nimble/bin:$PATH" >> ~/.profile
+        choosenim $CHANNEL
+      fi
+  - |
+      if [[ "$TRAVIS_OS_NAME" == "windows" ]];
+        curl $NIM_WIN --output choosenim.exe;
+        choosenim.exe $CHANNEL
+      fi
 
 script:
   - make release NAME=$NAME
