@@ -42,7 +42,7 @@ addons:
 before_install:
   - git tag -l "$version" || git tag "$(date +'%Y-%m-%d-%H')"
   - |
-      if [[ "$TRAVIS_OS_NAME" != "windows" ]];
+      if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
         export CHOOSENIM_NO_ANALYTICS=1
         curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
         sh init.sh -y
@@ -51,7 +51,7 @@ before_install:
         choosenim $CHANNEL
       fi
   - |
-      if [[ "$TRAVIS_OS_NAME" == "windows" ]];
+      if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
         curl $NIM_WIN --output choosenim.exe;
         choosenim.exe $CHANNEL
       fi
