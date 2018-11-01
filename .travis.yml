@@ -10,11 +10,15 @@ cache:
 matrix:
   include:
     - os: linux
-      env: VERSION=0.18.1
+      env:
+        - NAME=LINUX
+        - VERSION=0.18.1
       compiler: gcc
 
     - os: osx
-      env: VERSION=0.18.1
+      env:
+        - NAME=OSX
+        - VERSION=0.18.1
       compiler: clang
 
 addons:
@@ -35,7 +39,7 @@ script:
 
 before_deploy:
   - git config --local user.name "TRAVIS"
-  - git tag "$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)"
+  - git tag "$(date +'%Y%m%d%H%')-$NAME"
 
 deploy:
   provider: releases
