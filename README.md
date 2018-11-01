@@ -1,5 +1,7 @@
 # tinylog
 
+[![Build Status](https://travis-ci.org/Mobilpadde/tinylog.svg?branch=master)](https://travis-ci.org/Mobilpadde/tinylog)
+
 <p align="center">
 <img src="images/light.png?raw=true" alt="Sample Light Image">
 <img src="images/dark.png?raw=true" alt="Sample Dark Image">
