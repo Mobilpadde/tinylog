@@ -30,8 +30,6 @@ addons:
 
 before_install:
   - git tag "$(date +'%Y%m%d%H%M')_$CHANNEL"
-
-before_install:
   - export CHOOSENIM_NO_ANALYTICS=1
   - curl https://nim-lang.org/choosenim/init.sh -sSf > init.sh
   - sh init.sh -y
@@ -39,7 +37,7 @@ before_install:
   - echo "export PATH=~/.nimble/bin:$PATH" >> ~/.profile
   - choosenim $CHANNEL
 
-after_success:
+script:
   - make compile NAME=$NAME
 
 deploy:
