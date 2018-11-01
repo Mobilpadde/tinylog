@@ -10,11 +10,11 @@ cache:
 matrix:
   include:
     - os: linux
-      env: CHANNEL=devel
+      env: VERSION=0.18.1
       compiler: gcc
 
     - os: osx
-      env: CHANNEL=devel
+      env: VERSION=0.18.1
       compiler: clang
 
 addons:
@@ -28,7 +28,7 @@ install:
   - sh init.sh -y
   - export PATH=~/.nimble/bin:$PATH
   - echo "export PATH=~/.nimble/bin:$PATH" >> ~/.profile
-  - choosenim $CHANNEL
+  - choosenim $VERSION
 
 script:
   - make compile
