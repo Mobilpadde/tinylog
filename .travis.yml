@@ -45,4 +45,3 @@ deploy:
   skip_cleanup: true
   on:
     repo: Mobilpadde/tinylog
-    tags: true
