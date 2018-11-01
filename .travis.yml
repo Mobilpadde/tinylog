@@ -2,12 +2,16 @@
 # https://github.com/nim-lang/Nim/wiki/BuildServices#using-choosenim
 language: c
 
+branches:
+  only:
+    - master
+
 cache: ccache
 cache:
   directories:
     - .cache
-    - /home/travis/.choosenim/
-    - /home/travis/.nimble/
+    - ~/.choosenim/
+    - ~/.nimble/
 
 matrix:
   include:
@@ -39,6 +43,8 @@ before_install:
 
 script:
   - make compile NAME=$NAME
+  - ls -la
+  - ls -la | grep tinylog-
 
 deploy:
   provider: releases
