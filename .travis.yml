@@ -52,7 +52,8 @@ before_install:
       fi
   - |
       if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-        curl $NIM_WIN --output choosenim.exe;
+        curl $NIM_WIN --output choosenim.exe
+        choosenim.exe
         choosenim.exe $CHANNEL
       fi
 
