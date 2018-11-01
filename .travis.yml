@@ -30,8 +30,6 @@ matrix:
     - os: windows
       env:
         - NAME=WINDOWS
-        - CHANNEL=devel
-        - NIM_WIN=https://github.com/dom96/choosenim/releases/download/v0.3.2/choosenim-0.3.2_windows_i386.exe
       compiler: cmake
 
 addons:
@@ -52,8 +50,7 @@ before_install:
       fi
   - |
       if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-        wget -O choosenim.exe $NIM_WIN
-        choosenim.exe $CHANNEL
+        choco install nim
       fi
 
 script:
