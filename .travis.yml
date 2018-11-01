@@ -13,25 +13,26 @@ cache:
     - ~/.choosenim/
     - ~/.nimble/
 
-env:
-  - VERSION=$(date +'%Y-%m-%d-%H')
-  - CHANNEL=devel
-
 matrix:
   include:
     - os: linux
       env:
         - NAME=LINUX
+        - VERSION=$(date +'%Y-%m-%d-%H')
+        - CHANNEL=devel
       compiler: gcc
 
     - os: osx
       env:
         - NAME=OSX
+        - VERSION=$(date +'%Y-%m-%d-%H')
+        - CHANNEL=devel
       compiler: clang
 
     - os: windows
       env:
         - NAME=WINDOWS
+        - VERSION=$(date +'%Y-%m-%d-%H')
       compiler: cmake
 
 addons:
