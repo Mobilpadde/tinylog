@@ -1,5 +1,7 @@
 tinylog
 
+release/
+
 site/node_modules/
 site/dumps/*.png
 site/data/*.tl

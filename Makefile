@@ -21,7 +21,24 @@ run:
 compile:
 	nim c --threads:on src/tinylog.nim
 
+make release:
+	make compile
+	
+	mkdir -p release/site/data \
+		release/site/dumps \
+		release/site/static
+
+	mv src/tinylog release/
+	cp Makefile release/
+	cp -r site/scripts release/site/
+	cp -r site/stylus release/site/
+	cp -r site/package.json release/site/
+
+	tar -czf tinylog.tar.gz release/
+	rm -rf release/
+
 statics:
+	make deps
 	cd site && (yarn css || npm run css)
 	cd site && (yarn js || npm run js)
 
