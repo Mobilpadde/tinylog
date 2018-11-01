@@ -6,12 +6,15 @@ branches:
   only:
     - master
 
-cache: ccache
 cache:
   directories:
     - .cache
+    - ccache
     - ~/.choosenim/
     - ~/.nimble/
+
+env:
+  - VERSION=$(date +'%Y-%m-%d-%H')
 
 matrix:
   include:
@@ -38,7 +41,7 @@ addons:
       - build-essential
 
 before_install:
-  - git tag -l "$version" || git tag "$(date +'%Y-%m-%d-%H')"
+  - git tag -l "$VERSION" || git tag "$VERSION"
   - |
       if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
         export CHOOSENIM_NO_ANALYTICS=1
@@ -64,3 +67,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: Mobilpadde/tinylog
+    tags: true
