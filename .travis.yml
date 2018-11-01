@@ -15,19 +15,18 @@ cache:
 
 env:
   - VERSION=$(date +'%Y-%m-%d-%H')
+  - CHANNEL=devel
 
 matrix:
   include:
     - os: linux
       env:
         - NAME=LINUX
-        - CHANNEL=devel
       compiler: gcc
 
     - os: osx
       env:
         - NAME=OSX
-        - CHANNEL=devel
       compiler: clang
 
     - os: windows
@@ -57,13 +56,31 @@ before_install:
       fi
 
 script:
-  - make release NAME=$NAME
+  - |
+      if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
+        make release NAME=$NAME
+      fi
+  - |
+      if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+        nim c --threads:on src/tinylog.nim
+        
+        copy src/tinylog.exe release/tinylog.exe
+        copy Makefile release/Makefile
+        copy site/package.json release/site/package.json
+
+        xcopy /s site/scripts release/site/scripts
+        xcopy /s site/stylus release/site/stylus
+
+        7z a tinylog-$NAME.zip release/* -r
+      fi
 
 deploy:
   provider: releases
   api_key:
     secure: HAbMeLDgmMXmqrGlr6wFbu3vmEgY9JoeEEQi+XE15uLsbtKFnAocdb2iZRmqAIBu7EAHuKkgmCn6c6aGQ9UzLcy4dzdNqiBo/6G9IIdJkxMkpF7rQUzyUznV0zz3MPB+SFaGOVI//wz51F8KrZu1fkewC1kD1IWvLrA1lk8+GMXjb1v8XlcT9s5br3IbJ/UWL74CHAfoYx+ez4G8STdzkDTswm4HjxDbKpTn8nmt7tV7+A0fDDZ9SCg4kP44aPard9iyh4TT+e+DMrVTL7wZQ+70QvWkyOKKQDj5tTIHUoiqFRsdqY6cycgTobmr6HdA53IzW+NFclvhSLUBWPzX+zPk4yDgunPqU5KneYrrLzBCzXrWUggrsxYXXlnafjGwJObhw8ZpfNxXZAq1LBs95YZHLV9MHcdV+By9/bFlpsRKaF1w/OpS8XnnkI/y5Wo9abhLYwoMdfQbPckMUUb1XqB7t69lRjdQbC8tGFKLK+2MtJX7RcXmBNAXaeVgaAB0utYmKAy8FGzj4hHKpb5Gs3NuHUQ+UwgBS6Vt2eNHw9zjicOw6CFeLeTksZsD+prxiaT/PFipmkDum4cDjzMisuoIHaWxMHL2MmyZQNGWlvO6ooBRa0rWKdVP6j0g/PLIPb6elelfs4zFlQQQA6GTrhL49bbii2kFwGyhECkya7M=
-  file: "tinylog-$NAME.tar.gz"
+  file:
+    - "tinylog-$NAME.tar.gz"
+    - "tinylog-$NAME.zip"
   skip_cleanup: true
   on:
     repo: Mobilpadde/tinylog
