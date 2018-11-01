@@ -42,9 +42,7 @@ before_install:
   - choosenim $CHANNEL
 
 script:
-  - make compile NAME=$NAME
-  - ls -la
-  - ls -la | grep tinylog-
+  - make release NAME=$NAME
 
 deploy:
   provider: releases
