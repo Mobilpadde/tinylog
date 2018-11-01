@@ -12,13 +12,13 @@ matrix:
     - os: linux
       env:
         - NAME=LINUX
-        - VERSION=0.18.1
+        - CHANNEL=devel
       compiler: gcc
 
     - os: osx
       env:
         - NAME=OSX
-        - VERSION=0.18.1
+        - CHANNEL=devel
       compiler: clang
 
 addons:
@@ -32,14 +32,14 @@ install:
   - sh init.sh -y
   - export PATH=~/.nimble/bin:$PATH
   - echo "export PATH=~/.nimble/bin:$PATH" >> ~/.profile
-  - choosenim $VERSION
+  - choosenim $CHANNEL
 
 script:
   - make compile
 
 before_deploy:
   - git config --local user.name "TRAVIS"
-  - git tag "$(date +'%Y%m%d%H%')-$NAME"
+  - git tag "$(date +'%Y%m%d%H%')_$CHANNEL--$NAME"
 
 deploy:
   provider: releases
