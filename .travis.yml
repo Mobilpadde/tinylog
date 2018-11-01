@@ -29,12 +29,6 @@ matrix:
         - CHANNEL=devel
       compiler: clang
 
-    - os: windows
-      env:
-        - NAME=WINDOWS
-        - VERSION=$(date +'%Y-%m-%d-%H')
-      compiler: cmake
-
 addons:
   apt:
     packages:
@@ -60,19 +54,6 @@ script:
   - |
       if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then
         make release NAME=$NAME
-      fi
-  - |
-      if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-        nim c --threads:on src/tinylog.nim
-        
-        copy src/tinylog.exe release/tinylog.exe
-        copy Makefile release/Makefile
-        copy site/package.json release/site/package.json
-
-        xcopy /s site/scripts release/site/scripts
-        xcopy /s site/stylus release/site/stylus
-
-        7z a tinylog-$NAME.zip release/* -r
       fi
 
 deploy:
