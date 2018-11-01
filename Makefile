@@ -35,7 +35,6 @@ make release:
 	cp -r site/package.json release/site/
 
 	tar -czf tinylog.tar.gz release/
-	rm -rf release/
 
 statics:
 	make deps
