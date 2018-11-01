@@ -16,7 +16,7 @@ start:
 	make run
 
 run:
-	nim c --threads:on -r src/tinylog.nim -p=${PORT} -d=$(WD)
+	nim c --threads:on -r src/tinylog.nim -p:${PORT} -d:$(WD)
 
 compile:
 	nim c --threads:on src/tinylog.nim

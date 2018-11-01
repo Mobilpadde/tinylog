@@ -70,6 +70,8 @@ You can now start enjoying tinylog 😇
  * `t`, `time`: `int` - any number between `0` & `23`. Which will then correspond to what time to fetch data and tweet it.
     * std: `23`
     * Also, take a look at the [Post Scriptum](#post-scriptum).
+ * `dump` - dump the image and quit
+ * `tweet` - same as above, but tweet before quit
 
 ## How it works
 

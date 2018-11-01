@@ -61,10 +61,11 @@ proc fetchCommits*(path, port: string) =
 
         let address = "http://localhost:$1/githook" % port
         let resp = c.request(address, httpMethod = HttpPost, body = $body)
-        echo resp.status
 
-proc dumpTweet(port: string) =
-    discard execCmd("PORT=$1 make dump && make tweet" % port)
+        discard execCmd("PORT=$1 make dump" % port)
+
+proc tweetDump*() =
+    discard execCmd("make tweet")
 
 proc sleeper(port, path: string, time: int) =
     let wait = convert(Hours, Milliseconds, 1)
@@ -73,7 +74,7 @@ proc sleeper(port, path: string, time: int) =
         
         if now().hour == time:
             fetchCommits(path, port)
-            dumpTweet(port)
+            tweetDump()
 
 proc queueDumpAndTweet*(port, path: string, time: int = 23) =
     spawn sleeper(port, path, time)
